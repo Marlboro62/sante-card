@@ -6,7 +6,7 @@
  */
 
 (() => {
-const CARD_VERSION = "0.1.0-beta.1";
+const CARD_VERSION = "0.1.0-beta.2";
 
 /* ------------------------------------------------------------- utilitaires */
 
@@ -271,7 +271,7 @@ function spark(pts, w = 300, h = 60, hours = 24, span = 1) {
   pts.forEach((p, i) => { d += `${i ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)} `; });
   d += `L${w},${y(pts[pts.length - 1][1]).toFixed(1)}`;
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">` +
-    `<path class="spark-a" d="${d} L${w},${h} L0,${h} Z"/><path class="spark-l" d="${d}"/></svg>`;
+    `<path class="spark-a" d="${d} L${w},${h} L${x(pts[0][0]).toFixed(1)},${h} Z"/><path class="spark-l" d="${d}"/></svg>`;
 }
 
 /* ---------------------------------------------------------------- actions */
@@ -823,9 +823,9 @@ class SanteCard extends MaisonCard {
         ["Calories", kcal, goals[2], "var(--m-orange)", kId, kcal === null ? "—" : `${fmt(kcal)} kcal`, `/ ${fmt(goals[2])}`],
       ];
       const ring = (i, val, goal, col) => {
-        const rr = 44 - i * 11, cl = 2 * Math.PI * rr, f = val === null ? 0 : Math.max(0, Math.min(1, val / goal));
+        const rr = 44 - i * 11, cl = 2 * Math.PI * rr, f0 = val === null ? 0 : Math.max(0, Math.min(1, val / goal)), f = f0 > 0 && f0 < 0.02 ? 0.02 : f0;
         return `<circle class="sa-rt" cx="50" cy="50" r="${rr}" style="stroke:${col}"/>` +
-          `<circle class="sa-rv" cx="50" cy="50" r="${rr}" style="stroke:${col};stroke-dasharray:${(f * cl).toFixed(2)} ${cl.toFixed(2)}"/>`;
+          (f > 0 ? `<circle class="sa-rv" cx="50" cy="50" r="${rr}" style="stroke:${col};stroke-dasharray:${(f * cl).toFixed(2)} ${cl.toFixed(2)}"/>` : "");
       };
       html += `<section class="sa-sec sa-act"><svg class="sa-rings" viewBox="0 0 100 100" aria-hidden="true">${rows.map((x, i) => ring(i, x[1], x[2], x[3])).join("")}</svg>` +
         `<div class="sa-leg">${rows.map(([lab, val, goal, col, id, shown, of]) => {
