@@ -29,7 +29,7 @@
 
 # Carte Santé
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/docs/faq/custom_repositories)
+[![HACS Default](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz/)
 [![Release](https://img.shields.io/github/v/release/Marlboro62/sante-card)](https://github.com/Marlboro62/sante-card/releases)
 
 Carte Lovelace pour Home Assistant qui réunit sur un seul écran l'**activité**, la **fréquence cardiaque** et le **sommeil** mesurés par un **Xiaomi Mi Band 7** (intégration [Mi Band 7](https://github.com/Marlboro62/ha-miband)), complétés si vous le souhaitez par les mesures **Health Connect** de votre téléphone (application Home Assistant) : oxygène, FC au repos, tension, poids…
